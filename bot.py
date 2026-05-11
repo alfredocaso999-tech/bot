@@ -8,7 +8,7 @@ from threading import Thread
 # ==========================================
 # TOKEN SCRITTO DIRETTAMENTE (SOLUZIONE TEST)
 # ==========================================
-TOKEN = "8262179130:AAExljxX08oGFz2cYuQE6C4FMqNr3cgmiA"
+TOKEN = "8271338173:AAEp7cvCyhB4h9wAGAlQiuGrLm1Kxx4AdbA"
 
 print(f"✅ TOKEN: {TOKEN[:15]}... (prime 15 lettere)")
 print(f"✅ Lunghezza token: {len(TOKEN)} caratteri")
