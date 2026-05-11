@@ -5,39 +5,29 @@ from datetime import datetime
 from flask import Flask
 from threading import Thread
 
-# ---------------------------
-#  QUESTO È UN TEST. TI MANDA SUBITO UN MESSAGGIO
-# ---------------------------
-TOKEN = os.environ.get("BOT_TOKEN")
+# ==========================================
+# TOKEN SCRITTO DIRETTAMENTE (SOLUZIONE TEST)
+# ==========================================
+TOKEN = "8262179130:AAExljxX08oGFz2cYuQE6C4FMqNr3cgmiA"
 
-print(f"🔍 [DEBUG] Il token ricevuto da Render è: {TOKEN}")
-print(f"🔍 [DEBUG] Il token inizia con: {str(TOKEN)[:15]}...")
+print(f"✅ TOKEN: {TOKEN[:15]}... (prime 15 lettere)")
+print(f"✅ Lunghezza token: {len(TOKEN)} caratteri")
 
-if not TOKEN:
-    print("❌ [DEBUG] TOKEN MANCANTE! Render non lo sta passando.")
-    raise RuntimeError("BOT_TOKEN non impostato su Render!")
-
-# ---------------------------
-#  BOT
-# ---------------------------
 bot = telebot.TeleBot(TOKEN)
 
-# ---------------------------
-#  FLASK (per Render)
-# ---------------------------
+# Flask per Render
 app = Flask('')
-
 @app.route('/')
 def home():
-    return "✅ Bot attivo"
+    return "Bot attivo"
 
 def run():
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
 
 Thread(target=run).start()
-# ---------------------------
 
+# Comandi del bot
 @bot.message_handler(commands=['start'])
 def start(m):
     bot.reply_to(m, f"Ciao {m.from_user.first_name}!")
