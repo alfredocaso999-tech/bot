@@ -2,26 +2,41 @@ import os
 import telebot
 import random
 from datetime import datetime
-from threading import Thread
 from flask import Flask
+from threading import Thread
 
+# ---------------------------
+#  QUESTO È UN TEST. TI MANDA SUBITO UN MESSAGGIO
+# ---------------------------
 TOKEN = os.environ.get("BOT_TOKEN")
-if not TOKEN:
-    raise RuntimeError("BOT_TOKEN non impostato")
 
+print(f"🔍 [DEBUG] Il token ricevuto da Render è: {TOKEN}")
+print(f"🔍 [DEBUG] Il token inizia con: {str(TOKEN)[:15]}...")
+
+if not TOKEN:
+    print("❌ [DEBUG] TOKEN MANCANTE! Render non lo sta passando.")
+    raise RuntimeError("BOT_TOKEN non impostato su Render!")
+
+# ---------------------------
+#  BOT
+# ---------------------------
 bot = telebot.TeleBot(TOKEN)
 
-# Questa parte mantiene il bot "vivo" per Render
+# ---------------------------
+#  FLASK (per Render)
+# ---------------------------
 app = Flask('')
 
 @app.route('/')
 def home():
-    return "Bot attivo"
+    return "✅ Bot attivo"
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 Thread(target=run).start()
+# ---------------------------
 
 @bot.message_handler(commands=['start'])
 def start(m):
@@ -39,5 +54,5 @@ def time_cmd(m):
 def random_cmd(m):
     bot.reply_to(m, f"🎲 {random.randint(1,100)}")
 
-print("Bot avviato!")
+print("🚀 Bot avviato!")
 bot.infinity_polling()
